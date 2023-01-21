@@ -17,8 +17,8 @@
 
 */
 
-#define BOARD_SIZE 15
-#define WINNING_MATCHES 5
+#define BOARD_SIZE 15 // Default game board size
+#define WINNING_MATCHES 5 // Default number of stones that forms an unbroken chain and wins the game
 using namespace std;
 
 enum Player {X='X', O='O'};
@@ -452,9 +452,9 @@ public:
 	}
 
 	void startGame() {
-		cout << "Game created\nNotes:\n";
+		cout << "\n\nGame created.\nNotes:\n";
 		cout << "Entering the row and column index of the position separated by a space (e.g. the top left corner is 0 0).\n";
-		cout << "Non-numerical input will crash the program.\n";
+		cout << "Non-numerical input may crash the game.\n";
 		printBoard();
 
 
@@ -494,9 +494,10 @@ public:
 				}
 
 
-				cout << "Enter 1 to replay and 0 to exit:\n";
+				cout << "Enter 1 to play again or -1 to go back to main menu:\n";
 				cin >> replay;
-				if (replay == 0) {
+				if (replay == -1) {
+					resetGameBoard();
 					break;
 				}
 				else {
@@ -515,7 +516,7 @@ public:
 
 };
 
-
+// The TicTacToe class that will inherit Game class
 class TicTacToe: public Game {
 private:
 	char gameBoard[3][3];
@@ -540,6 +541,28 @@ int main() {
 	Game ttt = Game(3, 3);
 	Game gomoku = Game(15, 5);
 	
-	ttt.startGame();
+	//ttt.startGame();
+	cout << "######################################\n\n";
+	cout << "# Welcome to Dual-Player-Chess game! #\n\n";
+	cout << "######################################\n\n";
+	int playMode = 0;
+	
+	while (playMode != -1) {
+
+		cout << "\nEnter 1 to play TicTacToe or 2 to play Gomoku (Five-in-a-row)\n";
+		cout << "Or enter -1 to exit\n";
+		cin >> playMode;
+		if (playMode == -1) { break; }
+		else if (playMode == 1) {
+			ttt.startGame();
+		}
+		else if (playMode == 2) {
+			gomoku.startGame();
+		}
+		else {
+			cout << "I don't understand. Please check your input.\n";
+		}
+	}
+
 	return 0;
 }
