@@ -5,11 +5,11 @@
 
 /*
 
-	 
-	A Game class that supports both Tic Tac Toe and Gomoku (Five-in-a-row)
-	by initializing the game object with different board sizes and winning matches.
+	Game class: A base class for TicTacToe and Gomoku
+	TicTacToe and Gomoku classes: A Derived class from Game class
+	
 
-	Both of them are supproted beacause they share common characteristics
+	TicTacToe and Gomoku are supproted beacause they share common characteristics
 	such as the way of checking if a player wins: He forms an unbroken chain of N stones horizontally, vertically, or diagonally.
 	And the fact that winning condition is not checked by hard codes e.g. board[0][0] == board[0][1] = board[0][2]
 	But by locating the new moves to reduce time complexity of matching
@@ -29,7 +29,7 @@ private:
 	char gameBoard[BOARD_SIZE][BOARD_SIZE];
 	int gameBoardSize = BOARD_SIZE;
 	bool gameTie;
-	Player currentPlayer;
+	Player currentPlayer = X;
 	int maxMoves;
 	int winningMatches = WINNING_MATCHES;
 	string borders;
@@ -61,27 +61,40 @@ public:
 		this->currentPlayer = X;
 
 		//cout << currentPlayer << endl;
-		for (int i = 0; i < board_size; i++) {
-			for (int j = 0; j < board_size; j++) {
-				this->gameBoard[i][j] = ' ';
-			}
-		}
+		setGameBoard(board_size);
+
 		this->maxMoves = board_size * board_size;
 		this->gameBoardSize = board_size;
 		this->gameTie = false;
 
-		this->borders = "";
-		for (int i = 0; i < board_size; i++) {
-			this->borders += "- - ";
-		}
+		setBorders(board_size);
 
 		this->winningMatches = winMatches;
 		
 	}
 	
+	void setGameBoard(int board_size) {
+		for (int i = 0; i < board_size; i++) {
+			for (int j = 0; j < board_size; j++) {
+				this->gameBoard[i][j] = ' ';
+			}
+		}
+	}
+
+	void setBorders(int board_size) {
+		this->borders = "";
+		for (int i = 0; i < board_size; i++) {
+			this->borders += "- - ";
+		}
+	}
+
+	string getBorders() {
+		return borders;
+	}
 
 	void printBoard() {
 		int board_size = getGameBoardSize();
+		string borders = getBorders();
 		cout << "\n    ";
 		for (int i = 0; i < board_size; i++) {
 			//cout << i << "   ";
@@ -435,24 +448,33 @@ public:
 		return gameTie;
 	}
 
+	void setGameBoardSize(int size) {
+		gameBoardSize = size;
+		maxMoves = size * size;
+	}
+
 	int getGameBoardSize() {
 		return gameBoardSize;
 	}
 
-	void resetGameBoard() {
+	void setWinningMatches(int matches) {
+		winningMatches = matches;
+	}
+
+	void setGameTie(bool tied) {
+		gameTie = false;
+	}
+
+	void resetGame() {
 		int board_size = getGameBoardSize();
-		for (int i = 0; i < board_size; i++) {
-			for (int j = 0; j < board_size; j++) {
-				this->gameBoard[i][j] = ' ';
-			}
-		}
-		this->gameTie = false;
+		setGameBoard(board_size);
+		setGameTie(false);
 		this->maxMoves = board_size * board_size;
 		this->currentPlayer = X;
 	}
 
 	void startGame() {
-		cout << "\n\nGame created.\nNotes:\n";
+		cout << "\n\nGame created.\n\nNotes:\n";
 		cout << "Entering the row and column index of the position separated by a space (e.g. the top left corner is 0 0).\n";
 		cout << "Non-numerical input may crash the game.\n";
 		printBoard();
@@ -496,12 +518,11 @@ public:
 
 				cout << "Enter 1 to play again or -1 to go back to main menu:\n";
 				cin >> replay;
+				resetGame();
 				if (replay == -1) {
-					resetGameBoard();
 					break;
 				}
 				else {
-					resetGameBoard();
 					n_moves = 0;
 					printBoard();
 				}
@@ -519,32 +540,96 @@ public:
 // The TicTacToe class that will inherit Game class
 class TicTacToe: public Game {
 private:
-	char gameBoard[3][3];
-	int winningMatches = 3;
+	//char gameBoard[3][3];
+	//int winningMatches = 3;
+	string borders;
 public:
 	TicTacToe() {
-		Game tictactoe = Game(3, 3);
 
+		int board_size = 3;
+		int winMatches = 3;
+
+		//cout << currentPlayer << endl;
+		setBorders(board_size);
 		
+		//this->gameTie = false;
+		setGameTie(false);
+
+		setGameBoardSize(board_size);
+		//this->maxMoves = board_size * board_size;
+		//this->gameBoardSize = board_size;
+		setWinningMatches(winMatches);
+		//this->winningMatches = winMatches;
+
+		/*
+		this->borders = "";
+		for (int i = 0; i < board_size; i++) {
+			this->borders += "- - ";
+		}
+		*/
+		setBorders(board_size);
+		
+
 	}
+
 };
 
+
+// The Gomoku class that will also inherit Game class
+class Gomoku : public Game {
+private:
+	//char gameBoard[15][15];
+	//int winningMatches = 3;
+	string borders;
+public:
+	Gomoku() {
+
+		int board_size = 15;
+		int winMatches = 5;
+
+
+		
+		setBorders(board_size); // Build the borders
+
+		//this->gameTie = false;
+		setGameTie(false);
+
+		setGameBoardSize(board_size);
+		//this->maxMoves = board_size * board_size;
+		//this->gameBoardSize = board_size;
+		setWinningMatches(winMatches);
+		//this->winningMatches = winMatches;
+
+		/*
+		this->borders = "";
+		for (int i = 0; i < board_size; i++) {
+			this->borders += "- - ";
+		}
+		*/
+		setBorders(board_size);
+
+
+	}
+
+};
 
 int main() {
 	
 	
-	//startGame();
 
-	//TicTacToe ttt = TicTacToe();
-	//ttt.printBoard();
+	//Game ttt = Game(3, 3);
+	//Game gomoku = Game(15, 5);
 
-	Game ttt = Game(3, 3);
-	Game gomoku = Game(15, 5);
+	TicTacToe ttt_inherited1 = TicTacToe();
+
+	Gomoku gomoku_inherited1 = Gomoku();
+	//gomoku_inherited1.startGame();
 	
 	//ttt.startGame();
 	cout << "######################################\n\n";
 	cout << "# Welcome to Dual-Player-Chess game! #\n\n";
 	cout << "######################################\n\n";
+	
 	int playMode = 0;
 	
 	while (playMode != -1) {
@@ -554,15 +639,17 @@ int main() {
 		cin >> playMode;
 		if (playMode == -1) { break; }
 		else if (playMode == 1) {
-			ttt.startGame();
+			ttt_inherited1.startGame();
 		}
 		else if (playMode == 2) {
-			gomoku.startGame();
+			gomoku_inherited1.startGame();
 		}
 		else {
 			cout << "I don't understand. Please check your input.\n";
 		}
 	}
+	
+
 
 	return 0;
 }
