@@ -1,5 +1,8 @@
 # Project-TicTacToe
  
+ 
+This project is to develop a Tic-Tac-Toe game that can be transformed into a Gomoku game because they share similar characteristics. E.g. Two players in a game; Two kinds of pieces;Play in a square gameboard etc. The game is designed in object-oriented and a practice of my software design skills.
+
 A Game class that supports both *Tic-Tac-Toe* and *Gomoku (Five-in-a-row)* and will be the base class of other **two-player-two-chess games** e.g. Reversi
 by initializing the game object with different board sizes and winning matches.
 
