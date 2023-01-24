@@ -1,6 +1,6 @@
 # Project-TicTacToe
  
-A Game class that supports both *Tic-Tac-Toe* and *Gomoku (Five-in-a-row)*
+A Game class that supports both *Tic-Tac-Toe* and *Gomoku (Five-in-a-row)* and will be the base class of other two-player chess games
 by initializing the game object with different board sizes and winning matches.
 
 Both of them are supproted beacause they share common characteristics
