@@ -23,5 +23,6 @@ But by locating the new moves and checking it's eight directions to reduce time 
 ## Future plan
 Feature:
 - Let player selects which game to player (Finished on 23 Jan)
+
 System:
 - A Menu class for the main menu (where players choose a game)
