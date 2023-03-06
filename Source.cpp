@@ -473,10 +473,18 @@ public:
 		this->currentPlayer = X;
 	}
 
-	void startGame() {
-		cout << "\n\nGame created.\n\nNotes:\n";
+	void printGameInfo() {
+		cout << "######################################\n\n";
+		cout << "#             Game Created!          #\n\n";
+		cout << "######################################\n\n";
 		cout << "Entering the row and column index of the position separated by a space (e.g. the top left corner is 0 0).\n";
 		cout << "Non-numerical input may crash the game.\n";
+	}
+
+	void startGame() {
+
+		printGameInfo();
+		
 		printBoard();
 
 
